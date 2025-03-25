@@ -6,24 +6,26 @@ import os
 
 app = FastAPI()
 
-# Load model and scaler
-MODEL_PATH = "random_forest_maternal_health.pkl"
-SCALER_PATH = "scaler.pkl"
+# Define model directory
+MODEL_DIR = "models"
+MODEL_PATH = os.path.join(MODEL_DIR, "random_forest_maternal_health.pkl")
+SCALER_PATH = os.path.join(MODEL_DIR, "scaler.pkl")
 
+# Load model and scaler
 if os.path.exists(MODEL_PATH) and os.path.exists(SCALER_PATH):
     model = joblib.load(MODEL_PATH)
     scaler = joblib.load(SCALER_PATH)
 else:
-    raise FileNotFoundError("Model or Scaler not found!")
+    raise FileNotFoundError(f"Model or Scaler not found in {MODEL_DIR}!")
 
 @app.get("/")
 def home():
     return {"message": "Maternal Health Risk Prediction API is Running!"}
 
 @app.post("/predict/")
-def predict(age: float, systolic_bp: float, diastolic_bp: float, bs: float, body_temp: float, heart_rate: float):
+def predict(Age: float, SystolicBp: float, DiastolicBp: float, BS: float, BodyTemp: float, HeartRate: float):
     """Make a prediction using input features."""
-    features = np.array([[age, systolic_bp, diastolic_bp, bs, body_temp, heart_rate]])
+    features = np.array([[Age, SystolicBp, DiastolicBp, BS, BodyTemp, HeartRate]])
     features_scaled = scaler.transform(features)
     
     prediction = model.predict(features_scaled)[0]
