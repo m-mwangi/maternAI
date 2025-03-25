@@ -1,3 +1,4 @@
+import os
 import joblib
 import numpy as np
 import matplotlib.pyplot as plt
@@ -34,11 +35,15 @@ def evaluate_model(model, X_train, X_val, X_test, y_train, y_val, y_test):
     plt.ylabel("Actual")
     plt.show()
 
-def save_model(model, scaler, model_path="random_forest_maternal_health.pkl", scaler_path="scaler.pkl"):
-    """Saves the trained model and scaler."""
+def save_model(model, scaler, model_dir="matern_ai/model"):
+    """Saves the trained model and scaler inside the matern_ai/model directory."""
+    os.makedirs(model_dir, exist_ok=True)
+    model_path = os.path.join(model_dir, "random_forest_maternal_health.pkl")
+    scaler_path = os.path.join(model_dir, "scaler.pkl")
+    
     joblib.dump(model, model_path)
     joblib.dump(scaler, scaler_path)
-    print("Model and scaler saved successfully!")
+    print(f"Model and scaler saved successfully in {model_dir}!")
 
 if __name__ == "__main__":
     dataset_path = "Maternal Health Risk Data Set.csv"
