@@ -11,8 +11,10 @@ def load_model(model_path="random_forest_maternal_health.pkl", scaler_path="scal
 
 def make_prediction(model, scaler, sample):
     """Takes a raw input sample, applies scaling, and predicts the risk level."""
-    # Convert to DataFrame with feature names
-    feature_names = ["Age", "SystolicBP", "DiastolicBP", "BS", "BodyTemp", "HeartRate"]  # Update with correct feature names
+    # Feature names (ensure these match the model's training data)
+    feature_names = ["Age", "SystolicBP", "DiastolicBP", "BS", "BodyTemp", "HeartRate"]  
+
+    # Convert input list to DataFrame
     sample_df = pd.DataFrame([sample], columns=feature_names)
 
     # Apply scaling
@@ -31,12 +33,8 @@ if __name__ == "__main__":
     # Load model and scaler
     model, scaler = load_model()
 
-    # Example: Use the first test sample for prediction
-    dataset_path = "Maternal Health Risk Data Set.csv"
-    df = pd.read_csv(dataset_path)
-    df_cleaned = df.drop(columns=["RiskLevel"])  # Remove target column
-
-    sample = df_cleaned.iloc[0].values  # Select the first row as a test sample
+    # 🔹 **Manually input values** (Replace these with actual values)
+    sample = [25, 120, 80, 6.5, 37.5, 75]  # Example: Age 25, BP 120/80, BS 6.5, BodyTemp 37.5, HeartRate 75
 
     # Make prediction
     predicted_risk = make_prediction(model, scaler, sample)
