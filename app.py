@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 import numpy as np
 import os
+import time
 
 app = FastAPI()
 
@@ -46,7 +47,17 @@ async def upload_data(file: UploadFile = File(...)):
         if set(df.columns) != set(EXPECTED_COLUMNS):
             raise HTTPException(status_code=400, detail="CSV file does not match the expected format.")
         
+        # Log the filename and a sample of the data (first few rows)
+        print(f"File {file.filename} uploaded successfully!")
+        print(f"Sample data: \n{df.head()}")
+
+        # Save the uploaded file
         df.to_csv("new_data.csv", index=False)
+
+        # Log file timestamp
+        upload_timestamp = time.ctime(os.path.getmtime("new_data.csv"))
+        print(f"File {file.filename} uploaded at {upload_timestamp}")
+        
         return {"message": "File uploaded successfully!", "filename": file.filename}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -55,8 +66,15 @@ async def upload_data(file: UploadFile = File(...)):
 def retrain_model():
     """Retrain the model when new data is uploaded."""
     try:
+        # Read the uploaded data used for retraining
         df = pd.read_csv("new_data.csv")
-        
+
+        # Log information about the new data being used for retraining
+        retrain_timestamp = time.ctime(os.path.getmtime("new_data.csv"))
+        print(f"Retraining with the data from new_data.csv. Number of rows: {df.shape[0]}, Number of columns: {df.shape[1]}")
+        print(f"Retraining using data from new_data.csv, file last modified at {retrain_timestamp}")
+        print(f"Sample data used for retraining: \n{df.head()}")
+
         # Check if the columns match the expected ones before retraining
         if set(df.columns) != set(EXPECTED_COLUMNS):
             raise HTTPException(status_code=400, detail="Uploaded CSV file does not match the required format.")
@@ -69,10 +87,11 @@ def retrain_model():
         model_new = RandomForestClassifier(n_estimators=100, random_state=42)
         model_new.fit(X_new, y_new)
 
-        # Save new model
+        # Save the new model
         joblib.dump(model_new, MODEL_PATH)
-        
-        return {"message": "Model retrained and updated successfully!"}
+
+        return {
+            "message": f"Model retrained and updated successfully using {df.shape[0]} records."
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
