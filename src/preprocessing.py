@@ -7,12 +7,12 @@ from sklearn.preprocessing import StandardScaler
 from imblearn.over_sampling import SMOTE
 
 def load_data(file_path):
-    """Loads dataset from a CSV file."""
+    # Loads dataset from a CSV file
     df = pd.read_csv(file_path)
     return df
 
 def preprocess_data(df):
-    """Handles missing values, encodes labels, and removes outliers."""
+    # Handles missing values, encodes labels, and removes outliers
     # Encode the target variable
     df["RiskLevel"] = df["RiskLevel"].replace({"high risk": 2, "mid risk": 1, "low risk": 0})
 
@@ -31,15 +31,15 @@ def preprocess_data(df):
     return df_no_outliers
 
 def split_and_balance_data(df):
-    """Splits dataset into training, validation, and test sets, and applies SMOTE."""
-    X = df.drop('RiskLevel', axis=1)
+    # Splits dataset into training, validation, and test sets, and applies SMOTE
+    X = df.drop('RiskLevel', axis = 1)
     y = df['RiskLevel']
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=42, stratify=y_train)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42, stratify = y)
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size = 0.2, random_state = 42, stratify = y_train)
 
     # Apply SMOTE for class balancing
-    smote = SMOTE(sampling_strategy={0: 406}, random_state=42)
+    smote = SMOTE(sampling_strategy = {0: 406}, random_state = 42)
     X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
     # Scale the features
