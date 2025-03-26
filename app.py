@@ -96,7 +96,6 @@ def retrain_model(file_path: str = "new_data.csv"):
 
         return {
             "message": "Model retrained successfully!",
-            "accuracy": accuracy,
             "new_model_version": MODEL_PATH,
         }
     except Exception as e:
