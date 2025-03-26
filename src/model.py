@@ -29,7 +29,7 @@ def evaluate_model(model, X_train, X_val, X_test, y_train, y_val, y_test):
     # Confusion Matrix
     conf_matrix = confusion_matrix(y_test, model.predict(X_test))
     plt.figure(figsize = (6, 4))
-    sns.heatmap(conf_matrix, annot = True, fmt = "d", camp = "Blues")
+    sns.heatmap(conf_matrix, annot = True, fmt = "d", cmap = "Blues")
     plt.title("Confusion Matrix - Test Set")
     plt.xlabel("Predicted")
     plt.ylabel("Actual")
