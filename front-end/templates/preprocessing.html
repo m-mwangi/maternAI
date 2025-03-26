@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Preprocessing - Maternal Risk{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Data Preprocessing</h2>
+    <p>Upload your dataset for preprocessing.</p>
+
+    <form action="/preprocessing" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" class="form-control" required>
+        <button type="submit" class="btn btn-primary mt-2">Upload & Preprocess</button>
+    </form>
+
+    {% if message %}
+        <div class="alert alert-success mt-3">{{ message }}</div>
+    {% endif %}
+
+    {% if num_rows %}
+        <h3>Dataset Overview</h3>
+        <p><strong>Rows:</strong> {{ num_rows }}</p>
+        <p><strong>Columns:</strong> {{ num_cols }}</p>
+        
+        <h4>Column Names:</h4>
+        <ul>
+            {% for col in columns %}
+                <li>{{ col }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Missing Values:</h4>
+        <ul>
+            {% for key, value in missing_values.items() %}
+                <li>{{ key }}: {{ value }} missing</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}

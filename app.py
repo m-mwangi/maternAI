@@ -11,6 +11,9 @@ MODEL_DIR = "models"
 MODEL_PATH = os.path.join(MODEL_DIR, "random_forest_maternal_health.pkl")
 SCALER_PATH = os.path.join(MODEL_DIR, "scaler.pkl")
 
+# Define expected columns for retraining
+EXPECTED_COLUMNS = ["Age", "SystolicBp", "DiastolicBp", "BS", "BodyTemp", "HeartRate", "RiskLevel"]
+
 # Load model and scaler
 if os.path.exists(MODEL_PATH) and os.path.exists(SCALER_PATH):
     model = joblib.load(MODEL_PATH)
@@ -38,6 +41,11 @@ async def upload_data(file: UploadFile = File(...)):
     """Upload a new dataset for retraining."""
     try:
         df = pd.read_csv(file.file)
+        
+        # Check if the uploaded file has the expected columns
+        if set(df.columns) != set(EXPECTED_COLUMNS):
+            raise HTTPException(status_code=400, detail="CSV file does not match the expected format.")
+        
         df.to_csv("new_data.csv", index=False)
         return {"message": "File uploaded successfully!", "filename": file.filename}
     except Exception as e:
@@ -48,6 +56,11 @@ def retrain_model():
     """Retrain the model when new data is uploaded."""
     try:
         df = pd.read_csv("new_data.csv")
+        
+        # Check if the columns match the expected ones before retraining
+        if set(df.columns) != set(EXPECTED_COLUMNS):
+            raise HTTPException(status_code=400, detail="Uploaded CSV file does not match the required format.")
+        
         X_new = df.drop(columns=["RiskLevel"])
         y_new = df["RiskLevel"]
 
@@ -62,3 +75,4 @@ def retrain_model():
         return {"message": "Model retrained and updated successfully!"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+

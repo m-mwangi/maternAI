@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Visualizations - Maternal Risk{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Data Visualizations</h2>
+    <p>Here are some insights from the dataset:</p>
+
+    {% if error %}
+        <div class="alert alert-warning">{{ error }}</div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Feature Distribution</h4>
+                <img src="data:image/png;base64,{{ plots[0] }}" class="img-fluid" alt="Feature Distribution">
+                <p>This histogram shows the distribution of the selected feature.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Correlation Heatmap</h4>
+                <img src="data:image/png;base64,{{ plots[1] }}" class="img-fluid" alt="Correlation Heatmap">
+                <p>The heatmap reveals relationships between different variables.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Boxplot</h4>
+                <img src="data:image/png;base64,{{ plots[2] }}" class="img-fluid" alt="Boxplot">
+                <p>The boxplot helps identify outliers in the dataset.</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
