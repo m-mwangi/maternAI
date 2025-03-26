@@ -7,6 +7,7 @@ import numpy as np  # Import NumPy
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 # Allow requests from your frontend origin
