@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 import pandas as pd
 import joblib
 import os
+import numpy as np  # Import NumPy
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
@@ -20,28 +21,35 @@ EXPECTED_COLUMNS = ["Age", "SystolicBP", "DiastolicBP", "BS", "BodyTemp", "Heart
 # Load model and scaler
 if os.path.exists(MODEL_PATH) and os.path.exists(SCALER_PATH):
     model = joblib.load(MODEL_PATH)
+    scaler = joblib.load(SCALER_PATH)  # Load scaler
 else:
     raise FileNotFoundError(f"Model or Scaler not found in {MODEL_DIR}!")
 
 @app.get("/")
 def home():
     return {"message": "Maternal Health Risk Prediction API is Running!"}
-    
+
 @app.post("/predict/")
-def predict(Age: float, SystolicBp: float, DiastolicBp: float, BS: float, BodyTemp: float, HeartRate: float):
+def predict(Age: float, SystolicBP: float, DiastolicBP: float, BS: float, BodyTemp: float, HeartRate: float):
     """Make a prediction using input features."""
-    features = np.array([[Age, SystolicBp, DiastolicBp, BS, BodyTemp, HeartRate]])
+    
+    # Create input feature array
+    features = np.array([[Age, SystolicBP, DiastolicBP, BS, BodyTemp, HeartRate]])
+    
+    # Scale the input features
     features_scaled = scaler.transform(features)
     
+    # Make a prediction
     prediction = model.predict(features_scaled)[0]
     
+    # Map numerical prediction to risk level
     risk_mapping = {0: "low risk", 1: "mid risk", 2: "high risk"}
-    return {"Predicted Risk Level": risk_mapping[prediction]}
     
+    return {"Predicted Risk Level": risk_mapping[prediction]}
+
 @app.post("/upload/")
 async def upload_data(file: UploadFile = File(...)):
     """Upload a new dataset for retraining."""
-
     try:
         df = pd.read_csv(file.file)
 
@@ -58,11 +66,9 @@ async def upload_data(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @app.post("/retrain/")
 def retrain_model(file_path: str = "new_data.csv"):
     """Retrain the model using the uploaded data and evaluate it."""
-
     try:
         # Load the uploaded data for retraining
         df = pd.read_csv(file_path)
@@ -88,7 +94,6 @@ def retrain_model(file_path: str = "new_data.csv"):
         # Save the retrained model
         joblib.dump(model_new, MODEL_PATH)
 
-        # Return the retraining confirmation and evaluation metrics
         return {
             "message": "Model retrained successfully!",
             "accuracy": accuracy,
