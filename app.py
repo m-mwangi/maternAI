@@ -12,7 +12,7 @@ MODEL_PATH = os.path.join(MODEL_DIR, "random_forest_maternal_health.pkl")
 SCALER_PATH = os.path.join(MODEL_DIR, "scaler.pkl")
 
 # Define expected columns for retraining
-EXPECTED_COLUMNS = ["Age", "SystolicBp", "DiastolicBp", "BS", "BodyTemp", "HeartRate", "RiskLevel"]
+EXPECTED_COLUMNS = ["Age", "SystolicBP", "DiastolicBP", "BS", "BodyTemp", "HeartRate", "RiskLevel"]
 
 # Load model and scaler
 if os.path.exists(MODEL_PATH) and os.path.exists(SCALER_PATH):
