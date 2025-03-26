@@ -9,6 +9,20 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 app = FastAPI()
+# Allow requests from your frontend origin
+origins = [
+    "http://127.0.0.1:5000",  # Flask frontend (local)
+    "http://localhost:5000",  # Another possible local address
+    "https://your-deployed-frontend.com",  # Add this when deployed
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allows only specified origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 # Define model directory
 MODEL_DIR = "models"
