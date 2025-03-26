@@ -14,7 +14,7 @@ app = FastAPI()
 origins = [
     "http://127.0.0.1:5000",  # Flask frontend (local)
     "http://localhost:5000",  # Another possible local address
-    "https://your-deployed-frontend.com",  # Add this when deployed
+    "https://matern-ai-front-end.onrender.com",  #deployed frontend
 ]
 
 app.add_middleware(
