@@ -1,9 +1,11 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.responses import JSONResponse
 import pandas as pd
 import joblib
-import numpy as np
 import os
-import time
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 
 app = FastAPI()
 
@@ -18,7 +20,6 @@ EXPECTED_COLUMNS = ["Age", "SystolicBP", "DiastolicBP", "BS", "BodyTemp", "Heart
 # Load model and scaler
 if os.path.exists(MODEL_PATH) and os.path.exists(SCALER_PATH):
     model = joblib.load(MODEL_PATH)
-    scaler = joblib.load(SCALER_PATH)
 else:
     raise FileNotFoundError(f"Model or Scaler not found in {MODEL_DIR}!")
 
@@ -26,55 +27,35 @@ else:
 def home():
     return {"message": "Maternal Health Risk Prediction API is Running!"}
 
-@app.post("/predict/")
-def predict(Age: float, SystolicBp: float, DiastolicBp: float, BS: float, BodyTemp: float, HeartRate: float):
-    """Make a prediction using input features."""
-    features = np.array([[Age, SystolicBp, DiastolicBp, BS, BodyTemp, HeartRate]])
-    features_scaled = scaler.transform(features)
-    
-    prediction = model.predict(features_scaled)[0]
-    
-    risk_mapping = {0: "low risk", 1: "mid risk", 2: "high risk"}
-    return {"Predicted Risk Level": risk_mapping[prediction]}
-
 @app.post("/upload/")
 async def upload_data(file: UploadFile = File(...)):
     """Upload a new dataset for retraining."""
+
     try:
         df = pd.read_csv(file.file)
-        
+
         # Check if the uploaded file has the expected columns
         if set(df.columns) != set(EXPECTED_COLUMNS):
             raise HTTPException(status_code=400, detail="CSV file does not match the expected format.")
         
-        # Log the filename and a sample of the data (first few rows)
-        print(f"File {file.filename} uploaded successfully!")
-        print(f"Sample data: \n{df.head()}")
+        # Save the uploaded file for retraining
+        upload_file_path = "new_data.csv"
+        df.to_csv(upload_file_path, index=False)
 
-        # Save the uploaded file
-        df.to_csv("new_data.csv", index=False)
-
-        # Log file timestamp
-        upload_timestamp = time.ctime(os.path.getmtime("new_data.csv"))
-        print(f"File {file.filename} uploaded at {upload_timestamp}")
-        
-        return {"message": "File uploaded successfully!", "filename": file.filename}
+        return JSONResponse(content={"message": "File uploaded successfully for retraining."})
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @app.post("/retrain/")
-def retrain_model():
-    """Retrain the model when new data is uploaded."""
+def retrain_model(file_path: str = "new_data.csv"):
+    """Retrain the model using the uploaded data and evaluate it."""
+
     try:
-        # Read the uploaded data used for retraining
-        df = pd.read_csv("new_data.csv")
-
-        # Log information about the new data being used for retraining
-        retrain_timestamp = time.ctime(os.path.getmtime("new_data.csv"))
-        print(f"Retraining with the data from new_data.csv. Number of rows: {df.shape[0]}, Number of columns: {df.shape[1]}")
-        print(f"Retraining using data from new_data.csv, file last modified at {retrain_timestamp}")
-        print(f"Sample data used for retraining: \n{df.head()}")
-
+        # Load the uploaded data for retraining
+        df = pd.read_csv(file_path)
+        
         # Check if the columns match the expected ones before retraining
         if set(df.columns) != set(EXPECTED_COLUMNS):
             raise HTTPException(status_code=400, detail="Uploaded CSV file does not match the required format.")
@@ -82,16 +63,25 @@ def retrain_model():
         X_new = df.drop(columns=["RiskLevel"])
         y_new = df["RiskLevel"]
 
-        # Retrain model
-        from sklearn.ensemble import RandomForestClassifier
-        model_new = RandomForestClassifier(n_estimators=100, random_state=42)
-        model_new.fit(X_new, y_new)
+        # Split the data for evaluation
+        X_train, X_test, y_train, y_test = train_test_split(X_new, y_new, test_size=0.2, random_state=42)
 
-        # Save the new model
+        # Retrain the model
+        model_new = RandomForestClassifier(n_estimators=100, random_state=42)
+        model_new.fit(X_train, y_train)
+
+        # Evaluate the new model
+        y_pred = model_new.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+
+        # Save the retrained model
         joblib.dump(model_new, MODEL_PATH)
 
+        # Return the retraining confirmation and evaluation metrics
         return {
-            "message": f"Model retrained and updated successfully using {df.shape[0]} records."
+            "message": "Model retrained successfully!",
+            "accuracy": accuracy,
+            "new_model_version": MODEL_PATH,
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Error retraining the model: {str(e)}")
