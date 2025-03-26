@@ -26,7 +26,18 @@ else:
 @app.get("/")
 def home():
     return {"message": "Maternal Health Risk Prediction API is Running!"}
-
+    
+@app.post("/predict/")
+def predict(Age: float, SystolicBp: float, DiastolicBp: float, BS: float, BodyTemp: float, HeartRate: float):
+    """Make a prediction using input features."""
+    features = np.array([[Age, SystolicBp, DiastolicBp, BS, BodyTemp, HeartRate]])
+    features_scaled = scaler.transform(features)
+    
+    prediction = model.predict(features_scaled)[0]
+    
+    risk_mapping = {0: "low risk", 1: "mid risk", 2: "high risk"}
+    return {"Predicted Risk Level": risk_mapping[prediction]}
+    
 @app.post("/upload/")
 async def upload_data(file: UploadFile = File(...)):
     """Upload a new dataset for retraining."""
