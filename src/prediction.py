@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import joblib
 
-def load_model(model_path = "random_forest_maternal_health.pkl", scaler_path = "scaler.pkl"):
+def load_model(model_path = "models/random_forest_maternal_health.pkl", scaler_path = "models/scaler.pkl"):
     # Loads the trained model and scaler
     model = joblib.load(model_path)
     scaler = joblib.load(scaler_path)
