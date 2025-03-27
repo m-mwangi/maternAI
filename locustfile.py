@@ -11,8 +11,8 @@ class APIUser(HttpUser):
         """Send a prediction request with random test data."""
         data = {
             "Age": random.randint(18, 45),
-            "SystolicBp": random.randint(90, 180),
-            "DiastolicBp": random.randint(60, 120),
+            "SystolicBP": random.randint(90, 180),
+            "DiastolicBP": random.randint(60, 120),
             "BS": round(random.uniform(3.0, 10.0), 1),
             "BodyTemp": round(random.uniform(36.0, 39.0), 1),
             "HeartRate": random.randint(60, 130)
