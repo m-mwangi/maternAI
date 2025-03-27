@@ -31,9 +31,9 @@ The web app consists of five key sections:
 
 ## Video Demo and Live Link to App
 - **Video Demo**: [YouTube Link]
-- **Live App**: [Deployed URL]
+- **Live App**: https://matern-ai-front-end.onrender.com
 - **Docker Image**: [Docker Hub Link]
-- **Deployed API (Swagger UI)**: [Swagger UI Link]
+- **Deployed API (Swagger UI)**: https://matern-ai-1.onrender.com
 
 ## Navigating the Deployed App
 The deployed app consists of five key sections:
