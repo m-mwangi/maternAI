@@ -10,7 +10,7 @@ More information about my proposal project can be found here: https://docs.googl
 
 ## About the Dataset
 The dataset used for this model is publicly available on Kaggle:
-🔗 Maternal Health Risk Dataset
+🔗 [Maternal Health Risk Dataset](https://www.kaggle.com/datasets/csafrit2/maternal-health-risk-data/data)  
 
 ### Key Variables:
 Age - This is the age in years when a woman is pregnant.
