@@ -1,7 +1,25 @@
 # MaternAI
 
 ## Project Description
-MaternAI is a machine learning-powered application designed to predict maternal health risks. The app classifies patients into different risk levels: High Risk, Mid Risk, and Low Risk. It features a Flask-based web application where users can input patient data for risk predictions, upload new data for model retraining, and explore various dataset visualizations.
+Maternal health complications are key challenges in many developing African countries, contributing to high mortality rates from preventable conditions. This project will develop an ML pipeline, scale it effectively, and monitor its performance on a cloud platform of your choice.
+
+MaternAI is an ML-powered application designed to predict maternal health risks. It classifies patients into different risk levels: High Risk, Mid Risk, and Low Risk. 
+It contains a web application based on Flask where users can input different values to predict risks. It also has a section for model retraining and visualization insights that can help one understand the dataset fully.
+
+More information about my proposal project can be found here: https://docs.google.com/document/d/1xnnj8wq3rHsqiU6VgBP0DfMDTO1EZ9WXXSz1G3YgdLc/edit?usp=sharing
+
+## About the Dataset
+The dataset used for this model is publicly available on Kaggle:
+🔗 Maternal Health Risk Dataset
+
+### Key Variables:
+Age - This is the age in years when a woman is pregnant.
+SystolicBP - The upper value of Blood Pressure in mmHg.
+DiastolicBP - Lower value of Blood Pressure in mmHg.
+BS (Blood Sugar Level) - Blood sugar levels in terms of molar concentration, mmol/L.
+HeartRate - A normal resting heart rate in beats per minute.
+Risk Level - Predicted Risk Intensity Level during pregnancy considering the previous attributes. Categorized as either 'High Risk', 'Low Risk', or 'Mid Risk'.
+
 
 ## Features
 - **Prediction Page**: Allows users to input patient data and receive risk predictions.
