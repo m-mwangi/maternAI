@@ -37,6 +37,8 @@ https://matern-ai-front-end.onrender.com
 ## Deployed API (SwaggerUI):
 https://matern-ai-1.onrender.com
 
+## Frontend Repository
+[https://github.com/m-mwangi/maternAI_front-end]
 
 ## Docker Image Deployment
 **Docker Image** : mmwangi2/maternai:latest
@@ -114,8 +116,6 @@ Access the Locust interface via the link in your terminal, configure the user lo
 ![Screenshot (18)](https://github.com/user-attachments/assets/8f33a894-71c5-4d6a-8745-0e59f5af6109)
 
 
-## Frontend Repository
-[https://github.com/m-mwangi/maternAI_front-end]
 
 ## Contribution Guidelines
 Feel free to fork the repository and submit pull requests for improvements or bug fixes.
