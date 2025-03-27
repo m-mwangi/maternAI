@@ -40,7 +40,7 @@ MaternAI is deployed on a cloud platform, but you can also run it locally using 
 
 1. Pull the Docker image:
    ```bash
-   docker pull [your_dockerhub_username]/maternai:latest
+   docker pull mmwangi2/maternai:latest
    ```
 2. Run the container:
    ```bash
