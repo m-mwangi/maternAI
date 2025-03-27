@@ -33,8 +33,8 @@ The web app consists of five key sections:
 - **Live App**: https://matern-ai-front-end.onrender.com
 - **Docker Image**: mmwangi2/maternai:latest
 - **Deployed API (Swagger UI)**: https://matern-ai-1.onrender.com
-- 
 
+  
 ## Docker Image Deployment
 MaternAI is deployed on a cloud platform, but you can also run it locally using Docker:
 
@@ -105,6 +105,8 @@ To test system performance under heavy load using Locust:
 locust -f locustfile.py --host=https://matern-ai-1.onrender.com
 ```
 Access the Locust interface via the link in your terminal, configure the user load, and analyze the response times.
+
+![locust_image](https://github.com/user-attachments/assets/286d00ca-e5c5-4cd1-9e45-ea62d21afbf5)
 
 ## Frontend Repository
 [https://github.com/m-mwangi/maternAI_front-end]
