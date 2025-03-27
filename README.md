@@ -28,14 +28,19 @@ The web app consists of five key sections:
 4. **Retrain** - This section allows users to upload any new CSV file to enable model retraining. The uploaded file should match the feature columns in my original dataset. To test this feature, navigate to `data/uploads` to download sample files, rename them, and upload them. After uploading, click the **Retrain** button. Upon retraining, a success message with the new model version and accuracy will appear. 
 5. **Predict** - Input feature values and click **Predict** to receive risk level predictions. The page also explains the meaning of each prediction, range of values that can be inputted as well as usage instructions.
 
-## Video Demo and Live Link to App
-- **Video Demo**: [YouTube Link]
-- **Live App**: https://matern-ai-front-end.onrender.com
-- **Docker Image**: mmwangi2/maternai:latest
-- **Deployed API (Swagger UI)**: https://matern-ai-1.onrender.com
+## Video Demo:
+[Youtube Link]
 
-  
+## Live Web App:
+https://matern-ai-front-end.onrender.com
+
+## Deployed API (SwaggerUI):
+https://matern-ai-1.onrender.com
+
+
 ## Docker Image Deployment
+**Docker Image** : mmwangi2/maternai:latest
+
 MaternAI is deployed on a cloud platform, but you can also run it locally using Docker:
 
 1. Pull the Docker image:
