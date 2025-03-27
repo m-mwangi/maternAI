@@ -20,14 +20,14 @@ The dataset used for this model is publicly available on Kaggle:
 - HeartRate - A normal resting heart rate in beats per minute.
 - Risk Level - Predicted Risk Intensity Level during pregnancy considering the previous attributes. Categorized as either 'High Risk', 'Low Risk', or 'Mid Risk'.
 
+## Features/Navigating My Deployed Web Application
+The web app consists of five key sections:
+1. **Home** - An overview of the project, including its purpose and features.
+2. **Preprocess** - Details the preprocessing steps I applied before model training and building.
+3. **Visualizations** - Provides detailed insights into some of the dataset's features and their impact on maternal health risk predictions.
+4. **Retrain** - This section allows users to upload any new CSV file to enable model retraining. The uploaded file should match the feature columns in my original dataset. To test this feature, navigate to `data/uploads` to download sample files, rename them, and upload them. After uploading, click the **Retrain** button. Upon retraining, a success message with the new model version and accuracy will appear. 
+5. **Predict** - Input feature values and click **Predict** to receive risk level predictions. The page also explains the meaning of each prediction, range of values that can be inputted as well as usage instructions.
 
-## Features
-- **Prediction Page**: Allows users to input patient data and receive risk predictions.
-- **Dashboard**: Visualizations showcasing insights from the dataset.
-- **Data Upload**: Users can upload new data to the system for model retraining.
-- **Retrain Model**: A trigger to retrain the machine learning model based on new data.
-- **Flood Simulation**: Tests system performance under a high load of prediction requests using Locust.
-- **Dockerized Deployment**: The app is fully containerized for easy deployment and scaling.
 
 ## Video Demo and Live Link to App
 - **Video Demo**: [YouTube Link]
