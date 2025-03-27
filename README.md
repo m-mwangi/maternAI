@@ -58,7 +58,7 @@ MaternAI is deployed on a cloud platform, but you can also run it locally using 
    http://localhost:5000
    ```
 
-## Setting Up Locally
+## Setting Up Project Locally
 To run the project locally:
 
 1. **Clone the Repository:**
@@ -76,21 +76,21 @@ To run the project locally:
    pip install -r requirements.txt
    ```
 
-## Preprocessing
+### Preprocessing
 The preprocessing script is located at `src/preprocessing.py`.
 To run:
 ```bash
 python src/preprocessing.py
 ```
 
-## Model Training
+### Model Training
 The model training script is located at `src/model.py`.
 To train:
 ```bash
 python src/model.py
 ```
 
-## Prediction
+### Prediction
 The prediction script is located at `src/prediction.py`.
 To make predictions:
 ```bash
