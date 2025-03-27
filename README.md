@@ -13,12 +13,12 @@ The dataset used for this model is publicly available on Kaggle:
 🔗 [Maternal Health Risk Dataset](https://www.kaggle.com/datasets/csafrit2/maternal-health-risk-data/data)  
 
 ### Key Variables:
-Age - This is the age in years when a woman is pregnant.
-SystolicBP - The upper value of Blood Pressure in mmHg.
-DiastolicBP - Lower value of Blood Pressure in mmHg.
-BS (Blood Sugar Level) - Blood sugar levels in terms of molar concentration, mmol/L.
-HeartRate - A normal resting heart rate in beats per minute.
-Risk Level - Predicted Risk Intensity Level during pregnancy considering the previous attributes. Categorized as either 'High Risk', 'Low Risk', or 'Mid Risk'.
+- Age - This is the age in years when a woman is pregnant.
+- SystolicBP - The upper value of Blood Pressure in mmHg.
+- DiastolicBP - Lower value of Blood Pressure in mmHg.
+- BS (Blood Sugar Level) - Blood sugar levels in terms of molar concentration, mmol/L.
+- HeartRate - A normal resting heart rate in beats per minute.
+- Risk Level - Predicted Risk Intensity Level during pregnancy considering the previous attributes. Categorized as either 'High Risk', 'Low Risk', or 'Mid Risk'.
 
 
 ## Features
