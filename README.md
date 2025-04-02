@@ -29,7 +29,7 @@ The web app consists of five key sections:
 5. **Predict** - Input feature values and click **Predict** to receive risk level predictions. The page also explains the meaning of each prediction, range of values that can be inputted as well as usage instructions.
 
 ## Demo Video Presentation:
-https://www.youtube.com/watch?v=fS9cFrlNw0s
+https://youtu.be/Uqx17yIzydI
 
 ## Live Web App:
 https://matern-ai-front-end.onrender.com
