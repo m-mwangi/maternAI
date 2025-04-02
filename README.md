@@ -28,8 +28,8 @@ The web app consists of five key sections:
 4. **Retrain** - This section allows users to upload any new CSV file to enable model retraining. The uploaded file should match the feature columns in my original dataset. To test this feature, navigate to `data/uploads` to download sample files, rename them, and upload them. After uploading, click the **Retrain** button. Upon retraining, a success message with the new model version and accuracy will appear. 
 5. **Predict** - Input feature values and click **Predict** to receive risk level predictions. The page also explains the meaning of each prediction, range of values that can be inputted as well as usage instructions.
 
-## Video Demo:
-[Youtube Link]
+## Demo Video Presentation:
+https://www.youtube.com/watch?v=fS9cFrlNw0s
 
 ## Live Web App:
 https://matern-ai-front-end.onrender.com
@@ -114,8 +114,3 @@ locust -f locustfile.py --host=https://matern-ai-1.onrender.com
 Access the Locust interface via the link in your terminal, configure the user load, and analyze the response times.
 
 ![Screenshot (18)](https://github.com/user-attachments/assets/8f33a894-71c5-4d6a-8745-0e59f5af6109)
-
-
-
-## Contribution Guidelines
-Feel free to fork the repository and submit pull requests for improvements or bug fixes.
